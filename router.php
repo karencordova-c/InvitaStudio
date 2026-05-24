@@ -31,6 +31,12 @@ if (isset($routeMap[$requestPath])) {
     return serveStaticFile($basePath . $routeMap[$requestPath]);
 }
 
+$publicPagePath = $basePath . '/public' . $requestPath;
+
+if (preg_match('/^\/[A-Za-z0-9_-]+\.html$/', $requestPath) === 1 && is_file($publicPagePath)) {
+    return serveStaticFile($publicPagePath);
+}
+
 if (str_starts_with($requestPath, '/assets/')) {
     return serveStaticFile($basePath . '/public' . $requestPath);
 }
