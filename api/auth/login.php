@@ -62,11 +62,17 @@ try {
     $adminStatement->execute(['correo' => $correo]);
     $adminUser = $adminStatement->fetch();
 
+    if ($adminUser === false && canBootstrapAdminPassword($correo, $password)) {
+        bootstrapAdminUser($connection, $correo, $password);
+        $adminStatement->execute(['correo' => $correo]);
+        $adminUser = $adminStatement->fetch();
+    }
+
     $isPasswordValid = $adminUser !== false
         && (int) ($adminUser['activo'] ?? 0) === 1
         && password_verify($password, (string) ($adminUser['password_hash'] ?? ''));
 
-    if (!$isPasswordValid && $adminUser !== false && canRepairAdminPassword($correo, $password)) {
+    if (!$isPasswordValid && $adminUser !== false && canBootstrapAdminPassword($correo, $password)) {
         $repairedPasswordHash = password_hash($password, PASSWORD_DEFAULT);
 
         $repairStatement = $connection->prepare(
@@ -83,9 +89,11 @@ try {
             ]
         );
 
-        $adminUser['password_hash'] = $repairedPasswordHash;
-        $adminUser['activo'] = 1;
-        $isPasswordValid = true;
+        $adminStatement->execute(['correo' => $correo]);
+        $adminUser = $adminStatement->fetch();
+        $isPasswordValid = $adminUser !== false
+            && (int) ($adminUser['activo'] ?? 0) === 1
+            && password_verify($password, (string) ($adminUser['password_hash'] ?? ''));
     }
 
     if (!$isPasswordValid) {
@@ -147,13 +155,61 @@ try {
     );
 }
 
-function canRepairAdminPassword(string $correo, string $password): bool
+function canBootstrapAdminPassword(string $correo, string $password): bool
 {
-    $repairEmail = normalizeString(getenv('ADMIN_REPAIR_EMAIL') ?: '');
-    $repairPassword = (string) (getenv('ADMIN_REPAIR_PASSWORD') ?: '');
+    $repairEmail = normalizeString(getenv('ADMIN_REPAIR_EMAIL') ?: (getenv('ADMIN_EMAIL') ?: ''));
+    $repairPassword = (string) (getenv('ADMIN_REPAIR_PASSWORD') ?: (getenv('ADMIN_PASSWORD') ?: ''));
 
     return $repairEmail !== ''
         && $repairPassword !== ''
         && hash_equals($repairEmail, $correo)
         && hash_equals($repairPassword, $password);
+}
+
+function bootstrapAdminUser(PDO $connection, string $correo, string $password): void
+{
+    $adminName = sanitizeString(getenv('ADMIN_NAME') ?: 'Administrador General');
+    $adminRole = normalizeString(getenv('ADMIN_ROLE') ?: 'super_admin');
+    $allowedRoles = ['super_admin', 'operador', 'disenador'];
+
+    if (!in_array($adminRole, $allowedRoles, true)) {
+        $adminRole = 'super_admin';
+    }
+
+    $statement = $connection->prepare(
+        'INSERT INTO usuarios_admin (
+            nombre,
+            correo,
+            password_hash,
+            rol,
+            activo,
+            ultimo_login,
+            created_at,
+            updated_at
+        ) VALUES (
+            :nombre,
+            :correo,
+            :password_hash,
+            :rol,
+            1,
+            NULL,
+            NOW(),
+            NOW()
+        )
+        ON DUPLICATE KEY UPDATE
+            nombre = VALUES(nombre),
+            password_hash = VALUES(password_hash),
+            rol = VALUES(rol),
+            activo = 1,
+            updated_at = NOW()'
+    );
+
+    $statement->execute(
+        [
+            'nombre' => $adminName !== '' ? $adminName : 'Administrador General',
+            'correo' => $correo,
+            'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+            'rol' => $adminRole,
+        ]
+    );
 }
