@@ -1,6 +1,6 @@
 const invitaStudioRuntimeConfig = Object.freeze({
-    backendBaseUrl: "https://cintiaparral.com/invita",
-    apiBaseUrl: "https://cintiaparral.com/invita/api",
+    backendBaseUrl: window.location.origin,
+    apiBaseUrl: `${window.location.origin}/api`,
 });
 
 window.InvitaStudio = Object.freeze({

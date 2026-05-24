@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const paymentRuntimeApiBaseUrl = window.InvitaStudio && window.InvitaStudio.config
     ? window.InvitaStudio.config.apiBaseUrl
-    : "https://cintiaparral.com/invita/api";
+    : `${window.location.origin}/api`;
 
 const paymentFieldRules = {
     numero_tarjeta: {

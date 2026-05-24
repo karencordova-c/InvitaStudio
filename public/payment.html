@@ -396,7 +396,7 @@
     </main>
 
     <script>
-        const backendBaseUrl = "https://cintiaparral.com/invita";
+        const backendBaseUrl = window.location.origin;
         const lookupEndpoint = buildApiUrl("status/lookup.php");
         const processEndpoint = buildApiUrl("payments/process.php");
         const form = document.getElementById("payment-form");
