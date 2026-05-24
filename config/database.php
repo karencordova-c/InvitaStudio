@@ -5,6 +5,33 @@ require_once __DIR__ . '/env.php';
 
 loadEnvironmentFile(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
 
+if (!function_exists('getRailwayMysqlUrlConfig')) {
+    function getRailwayMysqlUrlConfig(): array
+    {
+        $mysqlUrl = getenv('MYSQL_URL') ?: '';
+
+        if ($mysqlUrl === '') {
+            return [];
+        }
+
+        $parsedUrl = parse_url($mysqlUrl);
+
+        if (!is_array($parsedUrl)) {
+            return [];
+        }
+
+        $databasePath = trim((string) ($parsedUrl['path'] ?? ''), '/');
+
+        return [
+            'HOST' => (string) ($parsedUrl['host'] ?? ''),
+            'PORT' => (string) ($parsedUrl['port'] ?? '3306'),
+            'DATABASE' => $databasePath,
+            'USERNAME' => (string) ($parsedUrl['user'] ?? ''),
+            'PASSWORD' => (string) ($parsedUrl['pass'] ?? ''),
+        ];
+    }
+}
+
 if (!function_exists('normalizeDatabaseConfig')) {
     function normalizeDatabaseConfig(array $config): array
     {
@@ -20,13 +47,15 @@ if (!function_exists('normalizeDatabaseConfig')) {
     }
 }
 
+$railwayMysqlUrlConfig = getRailwayMysqlUrlConfig();
+
 $databaseConfig = normalizeDatabaseConfig(
     [
-        'HOST' => getenv('DB_HOST') ?: '127.0.0.1',
-        'PORT' => getenv('DB_PORT') ?: '3306',
-        'DATABASE' => getenv('DB_NAME') ?: 'invitastudio',
-        'USERNAME' => getenv('DB_USER') ?: 'invitastudio_user',
-        'PASSWORD' => getenv('DB_PASSWORD') ?: '',
+        'HOST' => getenv('DB_HOST') ?: (getenv('MYSQLHOST') ?: ($railwayMysqlUrlConfig['HOST'] ?? '127.0.0.1')),
+        'PORT' => getenv('DB_PORT') ?: (getenv('MYSQLPORT') ?: ($railwayMysqlUrlConfig['PORT'] ?? '3306')),
+        'DATABASE' => getenv('DB_NAME') ?: (getenv('MYSQLDATABASE') ?: ($railwayMysqlUrlConfig['DATABASE'] ?? 'invitastudio')),
+        'USERNAME' => getenv('DB_USER') ?: (getenv('MYSQLUSER') ?: ($railwayMysqlUrlConfig['USERNAME'] ?? 'invitastudio_user')),
+        'PASSWORD' => getenv('DB_PASSWORD') ?: (getenv('MYSQLPASSWORD') ?: ($railwayMysqlUrlConfig['PASSWORD'] ?? '')),
         'CHARSET' => getenv('DB_CHARSET') ?: 'utf8mb4',
         'COLLATION' => getenv('DB_COLLATION') ?: 'utf8mb4_unicode_ci',
     ]
