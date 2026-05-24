@@ -66,6 +66,28 @@ try {
         && (int) ($adminUser['activo'] ?? 0) === 1
         && password_verify($password, (string) ($adminUser['password_hash'] ?? ''));
 
+    if (!$isPasswordValid && $adminUser !== false && canRepairAdminPassword($correo, $password)) {
+        $repairedPasswordHash = password_hash($password, PASSWORD_DEFAULT);
+
+        $repairStatement = $connection->prepare(
+            'UPDATE usuarios_admin
+             SET password_hash = :password_hash,
+                 activo = 1,
+                 updated_at = NOW()
+             WHERE id = :id'
+        );
+        $repairStatement->execute(
+            [
+                'password_hash' => $repairedPasswordHash,
+                'id' => $adminUser['id'],
+            ]
+        );
+
+        $adminUser['password_hash'] = $repairedPasswordHash;
+        $adminUser['activo'] = 1;
+        $isPasswordValid = true;
+    }
+
     if (!$isPasswordValid) {
         createActivityLogEntry(
             $connection,
@@ -123,4 +145,15 @@ try {
         false,
         'No fue posible iniciar sesion.'
     );
+}
+
+function canRepairAdminPassword(string $correo, string $password): bool
+{
+    $repairEmail = normalizeString(getenv('ADMIN_REPAIR_EMAIL') ?: '');
+    $repairPassword = (string) (getenv('ADMIN_REPAIR_PASSWORD') ?: '');
+
+    return $repairEmail !== ''
+        && $repairPassword !== ''
+        && hash_equals($repairEmail, $correo)
+        && hash_equals($repairPassword, $password);
 }
