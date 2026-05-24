@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvitaStudio | Solicitud de invitacion</title>
+    <meta name="description" content="Completa tu solicitud de invitacion digital en InvitaStudio con un formulario claro, guiado y listo para registrar tu pedido.">
+    <link rel="stylesheet" href="assets/css/base.css?v=20260514-1">
+    <link rel="stylesheet" href="assets/css/layout.css?v=20260514-1">
+    <link rel="stylesheet" href="assets/css/components.css?v=20260514-1">
+    <link rel="stylesheet" href="assets/css/pages.css?v=20260514-3">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=20260514-1">
+    <script src="assets/js/app.js?v=20260514-1" defer></script>
+    <script src="assets/js/request_form.js?v=20260514-1" defer></script>
+</head>
+<body data-page="request">
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+    <div class="page-shell">
+        <header class="site-header" data-site-header>
+            <div class="brand-block">
+                <a class="brand-mark" href="index.html" aria-label="InvitaStudio inicio">
+                    <span class="brand-mark__symbol brand-mark__symbol--image" aria-hidden="true">
+                        <img class="brand-mark__image" src="assets/img/invita_stuidio_isotipo.png" alt="">
+                    </span>
+                    <span class="brand-mark__text">
+                        <strong>InvitaStudio</strong>
+                        <small>Invitaciones digitales</small>
+                    </span>
+                </a>
+            </div>
+
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="site-nav" id="site-nav" aria-label="Principal">
+                <a href="index.html" data-nav="home">Inicio</a>
+                <a href="services.html" data-nav="services">Servicios</a>
+                <a href="request.html" data-nav="request">Solicitud</a>
+                <a href="status.html" data-nav="status">Estado</a>
+                <a href="contact.html" data-nav="contact">Contacto</a>
+                <a class="button button-primary button-nav" href="request.html">Solicitar invitacion</a>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <section class="page-banner page-banner-request">
+                <div class="request-intro-grid">
+                    <div class="request-intro-copy">
+                        <p class="eyebrow">Solicitud principal</p>
+                        <h1>Cuentanos tu evento y armemos una invitacion digital con un brief claro desde el inicio.</h1>
+                    </div>
+
+                    <div class="request-highlights card-surface">
+                        <span class="chip">Flujo V1</span>
+                        <ol class="number-list">
+                            <li>Compartes datos del evento y el estilo deseado.</li>
+                            <li>Registramos tu solicitud con estado pendiente.</li>
+                            <li>Continua el pago simulado usando una tarjeta de prueba local.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="split-layout split-layout--wide">
+                    <form
+                        class="card-surface form-panel request-form"
+                        action="../api/orders/create.php"
+                        method="post"
+                        novalidate
+                        data-request-form
+                        data-api-endpoint="../api/orders/create.php"
+                    >
+                        <div class="form-panel__header">
+                            <h2>Formulario de solicitud</h2>
+                            <p>Completa los campos obligatorios para registrar tu pedido inicial.</p>
+                        </div>
+
+                        <section class="request-form__section" aria-labelledby="section-personal">
+                            <div class="request-form__meta">
+                                <p class="eyebrow">1. Informacion personal</p>
+                                <h3 id="section-personal">Datos de contacto</h3>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-field" data-field-container="nombre">
+                                    <label for="nombre">Nombre completo</label>
+                                    <input id="nombre" name="nombre" type="text" placeholder="Ej. Mariana Flores" autocomplete="name" required>
+                                    <p class="field-error" data-error-for="nombre" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field" data-field-container="correo">
+                                    <label for="correo">Correo electronico</label>
+                                    <input id="correo" name="correo" type="email" placeholder="correo@ejemplo.com" autocomplete="email" required>
+                                    <p class="field-error" data-error-for="correo" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field" data-field-container="telefono">
+                                    <label for="telefono">Telefono</label>
+                                    <input id="telefono" name="telefono" type="tel" placeholder="Ej. 555 123 4567" autocomplete="tel" required>
+                                    <p class="field-error" data-error-for="telefono" aria-live="polite"></p>
+                                </div>
+
+                                <fieldset class="form-field" data-field-container="medio_contacto">
+                                    <legend>Medio preferido de contacto</legend>
+                                    <div class="radio-pill-group">
+                                        <label class="radio-pill">
+                                            <input type="radio" name="medio_contacto" value="whatsapp" checked>
+                                            <span>WhatsApp</span>
+                                        </label>
+                                        <label class="radio-pill">
+                                            <input type="radio" name="medio_contacto" value="correo">
+                                            <span>Correo</span>
+                                        </label>
+                                        <label class="radio-pill">
+                                            <input type="radio" name="medio_contacto" value="llamada">
+                                            <span>Llamada</span>
+                                        </label>
+                                    </div>
+                                    <p class="field-error" data-error-for="medio_contacto" aria-live="polite"></p>
+                                </fieldset>
+                            </div>
+                        </section>
+
+                        <section class="request-form__section" aria-labelledby="section-evento">
+                            <div class="request-form__meta">
+                                <p class="eyebrow">2. Informacion del evento</p>
+                                <h3 id="section-evento">Contexto de la celebracion</h3>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-field" data-field-container="tipo_evento">
+                                    <label for="tipo_evento">Tipo de evento</label>
+                                    <select id="tipo_evento" name="tipo_evento" required>
+                                        <option value="">Selecciona una opcion</option>
+                                        <option value="Boda">Boda</option>
+                                        <option value="Cumpleaños">Cumpleaños</option>
+                                        <option value="Bautizo">Bautizo</option>
+                                        <option value="XV Anos">XV Anos</option>
+                                        <option value="Baby Shower">Baby Shower</option>
+                                        <option value="Aniversario">Aniversario</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                    <p class="field-error" data-error-for="tipo_evento" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field" data-field-container="nombre_evento">
+                                    <label for="nombre_evento">Nombre del evento o festejado</label>
+                                    <input id="nombre_evento" name="nombre_evento" type="text" placeholder="Ej. Boda de Mariana y Luis">
+                                    <p class="field-note">Opcional. Si lo dejas vacio, generaremos un nombre base para el pedido.</p>
+                                    <p class="field-error" data-error-for="nombre_evento" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field" data-field-container="fecha_evento">
+                                    <label for="fecha_evento">Fecha del evento</label>
+                                    <input id="fecha_evento" name="fecha_evento" type="date" required>
+                                    <p class="field-error" data-error-for="fecha_evento" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field" data-field-container="hora_evento">
+                                    <label for="hora_evento">Hora del evento</label>
+                                    <input id="hora_evento" name="hora_evento" type="time" required>
+                                    <p class="field-error" data-error-for="hora_evento" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field form-field--full" data-field-container="ubicacion_evento">
+                                    <label for="ubicacion_evento">Ubicacion</label>
+                                    <input id="ubicacion_evento" name="ubicacion_evento" type="text" placeholder="Ej. Jardin Los Encinos, Ciudad de Mexico" required>
+                                    <p class="field-error" data-error-for="ubicacion_evento" aria-live="polite"></p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="request-form__section" aria-labelledby="section-estilo">
+                            <div class="request-form__meta">
+                                <p class="eyebrow">3. Preferencias visuales</p>
+                                <h3 id="section-estilo">Direccion creativa</h3>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-field" data-field-container="tematica">
+                                    <label for="tematica">Tematica</label>
+                                    <input id="tematica" name="tematica" type="text" placeholder="Ej. Floral, jardin, gala, infantil">
+                                    <p class="field-error" data-error-for="tematica" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field" data-field-container="colores">
+                                    <label for="colores">Colores deseados</label>
+                                    <input id="colores" name="colores" type="text" placeholder="Ej. Blanco, dorado y verde salvia">
+                                    <p class="field-error" data-error-for="colores" aria-live="polite"></p>
+                                </div>
+
+                                <div class="form-field form-field--full" data-field-container="estilo_diseno">
+                                    <label for="estilo_diseno">Estilo visual</label>
+                                    <select id="estilo_diseno" name="estilo_diseno" required>
+                                        <option value="">Selecciona un estilo</option>
+                                        <option value="Minimalista">Minimalista</option>
+                                        <option value="Elegante">Elegante</option>
+                                        <option value="Romantico">Romantico</option>
+                                        <option value="Moderno">Moderno</option>
+                                        <option value="Clasico">Clasico</option>
+                                        <option value="Ilustrado">Ilustrado</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                    <p class="field-error" data-error-for="estilo_diseno" aria-live="polite"></p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="request-form__section" aria-labelledby="section-adicional">
+                            <div class="request-form__meta">
+                                <p class="eyebrow">4. Informacion adicional</p>
+                                <h3 id="section-adicional">Detalles extra</h3>
+                            </div>
+
+                            <div class="form-field" data-field-container="informacion_adicional">
+                                <label for="informacion_adicional">Detalles adicionales</label>
+                                <textarea
+                                    id="informacion_adicional"
+                                    name="informacion_adicional"
+                                    rows="5"
+                                    placeholder="Comparte datos que debe llevar la invitacion, referencias visuales, tono del evento o necesidades especiales."
+                                ></textarea>
+                                <p class="field-note">Puedes incluir frases clave, referencia de invitados, dress code o links que luego compartiras con el equipo.</p>
+                                <p class="field-error" data-error-for="informacion_adicional" aria-live="polite"></p>
+                            </div>
+                        </section>
+
+                        <section class="request-form__section" aria-labelledby="section-entrega">
+                            <div class="request-form__meta">
+                                <p class="eyebrow">5. Tipo de entrega</p>
+                                <h3 id="section-entrega">Formato inicial deseado</h3>
+                            </div>
+
+                            <fieldset class="form-field form-field--full" data-field-container="formato_entrega">
+                                <legend>Selecciona el formato de entrega</legend>
+                                <div class="delivery-options">
+                                    <label class="delivery-option">
+                                        <input type="radio" name="formato_entrega" value="imagen" checked>
+                                        <span class="delivery-option__content">
+                                            <strong>Imagen</strong>
+                                            <small>Ideal para compartir rapido por mensajeria.</small>
+                                        </span>
+                                    </label>
+                                    <label class="delivery-option">
+                                        <input type="radio" name="formato_entrega" value="pdf">
+                                        <span class="delivery-option__content">
+                                            <strong>PDF</strong>
+                                            <small>Version lista para compartir o imprimir.</small>
+                                        </span>
+                                    </label>
+                                    <label class="delivery-option">
+                                        <input type="radio" name="formato_entrega" value="video">
+                                        <span class="delivery-option__content">
+                                            <strong>Video</strong>
+                                            <small>Para propuestas con movimiento o animacion.</small>
+                                        </span>
+                                    </label>
+                                </div>
+                                <p class="field-error" data-error-for="formato_entrega" aria-live="polite"></p>
+                            </fieldset>
+                        </section>
+
+                        <section class="request-form__section" aria-labelledby="section-servicio">
+                            <div class="request-form__meta">
+                                <p class="eyebrow">6. Seleccion de servicio</p>
+                                <h3 id="section-servicio">Elige el tipo de invitacion</h3>
+                            </div>
+
+                            <div class="service-grid" data-field-container="servicio_id">
+                                <label class="service-card-option" data-service-option>
+                                    <input type="radio" name="servicio_id" value="clasica_esencial">
+                                    <span class="service-card-option__content">
+                                        <span class="pricing-label">Esencial</span>
+                                        <strong>Invitacion digital clasica</strong>
+                                        <small>Categoria: Social</small>
+                                        <em>Desde $850 MXN</em>
+                                    </span>
+                                </label>
+
+                                <label class="service-card-option service-card-option--featured" data-service-option>
+                                    <input type="radio" name="servicio_id" value="interactiva_recomendada">
+                                    <span class="service-card-option__content">
+                                        <span class="pricing-label">Recomendado</span>
+                                        <strong>Invitacion interactiva</strong>
+                                        <small>Categoria: Experiencia web</small>
+                                        <em>Desde $1,450 MXN</em>
+                                    </span>
+                                </label>
+
+                                <label class="service-card-option" data-service-option>
+                                    <input type="radio" name="servicio_id" value="concepto_medida">
+                                    <span class="service-card-option__content">
+                                        <span class="pricing-label">Personalizado</span>
+                                        <strong>Concepto a medida</strong>
+                                        <small>Categoria: Direccion creativa</small>
+                                        <em>Cotizacion segun briefing</em>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <p class="field-error" data-error-for="servicio_id" aria-live="polite"></p>
+
+                            <article class="service-summary" data-service-summary>
+                                <span class="chip">Servicio</span>
+                                <h4 data-service-title>Selecciona una opcion para ver el resumen.</h4>
+                                <p data-service-meta>Categoria y precio placeholder apareceran aqui.</p>
+                            </article>
+                        </section>
+
+                        <div class="form-actions">
+                            <button class="button button-primary" type="submit" data-submit-button data-default-label="Registrar solicitud" data-loading-label="Enviando solicitud...">
+                                Registrar solicitud
+                            </button>
+                            <a class="button button-outline" href="services.html">Revisar servicios</a>
+                        </div>
+
+                        <p class="form-feedback" data-form-feedback aria-live="polite"></p>
+                        <div class="form-result-actions" data-form-result-actions hidden></div>
+                    </form>
+
+                    <aside class="aside-stack request-aside">
+                        <article class="card-surface info-card">
+                            <span class="chip">Checklist</span>
+                            <h3>Antes de enviar</h3>
+                            <ul class="feature-list request-checklist">
+                                <li>Confirma fecha, hora y ubicacion del evento.</li>
+                                <li>Elige un servicio acorde al nivel de personalizacion.</li>
+                                <li>Define el estilo visual y los colores principales.</li>
+                                <li>Agrega cualquier detalle que no deba faltar en la invitacion.</li>
+                            </ul>
+                        </article>
+
+                        <article class="card-surface info-card">
+                            <span class="chip">Estado inicial</span>
+                            <h3>Que recibiras al registrar la solicitud</h3>
+                            <ol class="number-list">
+                                <li>Confirmacion visual inmediata en esta pagina.</li>
+                                <li>Registro del pedido en estado pendiente.</li>
+                                <li>Acceso a la pantalla de pago simulado para continuar el flujo.</li>
+                            </ol>
+                        </article>
+                    </aside>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div>
+                <a class="brand-mark brand-mark--footer" href="index.html">
+                    <span class="brand-mark__symbol brand-mark__symbol--image brand-mark__symbol--footer" aria-hidden="true">
+                        <img class="brand-mark__image brand-mark__image--footer" src="assets/img/invita_stuidio_isotipo.png" alt="">
+                    </span>
+                    <span class="brand-mark__text">
+                        <strong>InvitaStudio</strong>
+                        <small>Experiencias de invitacion digital</small>
+                    </span>
+                </a>
+                <p class="footer-copy">Sitio publico base para presentar servicios, recibir solicitudes y dar seguimiento a pedidos.</p>
+            </div>
+
+            <div class="footer-links">
+                <div>
+                    <h3>Navegacion</h3>
+                    <a href="services.html">Servicios</a>
+                    <a href="gallery.html">Galeria</a>
+                    <a href="status.html">Estado</a>
+                </div>
+                <div>
+                    <h3>Contacto</h3>
+                    <a href="contact.html">Canales de atencion</a>
+                    <a href="request.html">Nueva solicitud</a>
+                    <span>WhatsApp placeholder</span>
+                </div>
+                <div>
+                    <h3>Redes</h3>
+                    <span>Instagram placeholder</span>
+                    <span>Pinterest placeholder</span>
+                    <span>TikTok placeholder</span>
+                </div>
+            </div>
+
+            <p class="footer-meta">&copy; <span data-current-year></span> InvitaStudio. Base publica V1.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvitaStudio | Catalogo de servicios</title>
+    <meta name="description" content="Explora el catalogo activo de servicios de invitaciones digitales de InvitaStudio con precios base, formatos y tiempos estimados.">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/pages.css?v=20260514-4">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <script src="assets/js/app.js" defer></script>
+    <script src="assets/js/services.js?v=20260514-4" defer></script>
+</head>
+<body data-page="services">
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+    <div class="page-shell">
+        <header class="site-header" data-site-header>
+            <div class="brand-block">
+                <a class="brand-mark" href="index.html" aria-label="InvitaStudio inicio">
+                    <span class="brand-mark__symbol brand-mark__symbol--image" aria-hidden="true">
+                        <img class="brand-mark__image" src="assets/img/invita_stuidio_isotipo.png" alt="">
+                    </span>
+                    <span class="brand-mark__text">
+                        <strong>InvitaStudio</strong>
+                        <small>Invitaciones digitales</small>
+                    </span>
+                </a>
+            </div>
+
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="site-nav" id="site-nav" aria-label="Principal">
+                <a href="index.html" data-nav="home">Inicio</a>
+                <a href="services.html" data-nav="services">Servicios</a>
+                <a href="request.html" data-nav="request">Solicitud</a>
+                <a href="status.html" data-nav="status">Estado</a>
+                <a href="contact.html" data-nav="contact">Contacto</a>
+                <a class="button button-primary button-nav" href="request.html">Solicitar invitacion</a>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <section class="page-banner page-banner-services services-hero">
+                <div class="services-hero__copy">
+                    <p class="eyebrow">Catalogo de servicios</p>
+                    <h1>Invitaciones digitales para distintos estilos y momentos del evento.</h1>
+                    <p class="lead">
+                        Revisa los servicios activos del catalogo de InvitaStudio con su precio base,
+                        formato de entrega, tiempo estimado y una referencia visual simple.
+                    </p>
+                </div>
+
+                <div class="services-hero__stats">
+                    <article class="service-stat-card">
+                        <span>Servicios activos</span>
+                        <strong data-services-total>--</strong>
+                    </article>
+                    <article class="service-stat-card">
+                        <span>Categorias</span>
+                        <strong data-services-categories>--</strong>
+                    </article>
+                    <article class="service-stat-card">
+                        <span>Precio inicial</span>
+                        <strong data-services-starting-price>--</strong>
+                    </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section services-catalog-section"
+                data-services-page
+                data-services-endpoint="../api/services/list.php"
+            >
+                <div class="split-layout split-layout--wide services-catalog-intro">
+                    <div>
+                        <p class="eyebrow">Categorias activas</p>
+                        <h2>Un catalogo editable desde admin y visible en tiempo real.</h2>
+                        <p class="lead">
+                            Esta vista se alimenta directamente desde la base de datos local para mantener
+                            precios, formatos y tiempos alineados con el modulo de administracion.
+                        </p>
+                    </div>
+
+                    <div class="services-chip-panel" data-service-category-chips>
+                        <span class="chip">Cargando catalogo...</span>
+                    </div>
+                </div>
+
+                <div class="form-feedback is-info services-feedback" data-services-feedback hidden></div>
+
+                <div class="services-catalog-grid" data-services-grid aria-live="polite">
+                    <article class="service-card service-card--loading">
+                        <div class="service-visual service-visual--placeholder"></div>
+                        <span class="pricing-label">Cargando</span>
+                        <p class="service-price">--</p>
+                    </article>
+                    <article class="service-card service-card--loading">
+                        <div class="service-visual service-visual--placeholder"></div>
+                        <span class="pricing-label">Cargando</span>
+                        <p class="service-price">--</p>
+                    </article>
+                    <article class="service-card service-card--loading">
+                        <div class="service-visual service-visual--placeholder"></div>
+                        <span class="pricing-label">Cargando</span>
+                        <p class="service-price">--</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="content-section services-gallery-band" aria-label="Ejemplos de invitaciones digitales">
+                <div class="services-gallery-band__copy">
+                    <p class="eyebrow">Ejemplos visuales</p>
+                    <h2>Asi puede verse una invitacion digital dentro del catalogo.</h2>
+                </div>
+
+                <div class="services-gallery-carousel" data-gallery-carousel>
+                    <div class="services-gallery-viewport">
+                        <div class="services-gallery-track" data-gallery-track>
+                            <div class="services-gallery-page">
+                                <article class="services-gallery-card">
+                                    <img src="assets/img/Galeria/ejemplo_1.png" alt="Ejemplo de invitacion digital 1">
+                                </article>
+                                <article class="services-gallery-card">
+                                    <img src="assets/img/Galeria/ejemplo_2.png" alt="Ejemplo de invitacion digital 2">
+                                </article>
+                                <article class="services-gallery-card">
+                                    <img src="assets/img/Galeria/ejemplo_3.png" alt="Ejemplo de invitacion digital 3">
+                                </article>
+                            </div>
+                            <div class="services-gallery-page">
+                                <article class="services-gallery-card">
+                                    <img src="assets/img/Galeria/ejemplo_4.png" alt="Ejemplo de invitacion digital 4">
+                                </article>
+                                <article class="services-gallery-card">
+                                    <img src="assets/img/Galeria/ejemplo_5.png" alt="Ejemplo de invitacion digital 5">
+                                </article>
+                                <article class="services-gallery-card">
+                                    <img src="assets/img/Galeria/ejemplo_6.png" alt="Ejemplo de invitacion digital 6">
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="services-gallery-controls">
+                        <button class="button button-outline" type="button" data-gallery-prev>Anterior</button>
+                        <span class="services-gallery-status" data-gallery-status>Pagina 1 de 2</span>
+                        <button class="button button-primary" type="button" data-gallery-next>Siguiente</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section cta-band">
+                <div>
+                    <p class="eyebrow">Siguiente paso</p>
+                    <h2>Cuando tengas claro el servicio, continua con tu solicitud.</h2>
+                </div>
+                <div class="hero-actions">
+                    <a class="button button-primary" href="request.html">Iniciar solicitud</a>
+                    <a class="button button-secondary" href="contact.html">Resolver dudas</a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div>
+                <a class="brand-mark brand-mark--footer" href="index.html">
+                    <span class="brand-mark__symbol brand-mark__symbol--image brand-mark__symbol--footer" aria-hidden="true">
+                        <img class="brand-mark__image brand-mark__image--footer" src="assets/img/invita_stuidio_isotipo.png" alt="">
+                    </span>
+                    <span class="brand-mark__text">
+                        <strong>InvitaStudio</strong>
+                        <small>Experiencias de invitacion digital</small>
+                    </span>
+                </a>
+                <p class="footer-copy">Sitio publico base para presentar servicios, recibir solicitudes y dar seguimiento a pedidos.</p>
+            </div>
+
+            <div class="footer-links">
+                <div>
+                    <h3>Navegacion</h3>
+                    <a href="services.html">Servicios</a>
+                    <a href="gallery.html">Galeria</a>
+                    <a href="status.html">Estado</a>
+                </div>
+                <div>
+                    <h3>Contacto</h3>
+                    <a href="contact.html">Canales de atencion</a>
+                    <a href="request.html">Nueva solicitud</a>
+                    <span>WhatsApp placeholder</span>
+                </div>
+                <div>
+                    <h3>Redes</h3>
+                    <span>Instagram placeholder</span>
+                    <span>Pinterest placeholder</span>
+                    <span>TikTok placeholder</span>
+                </div>
+            </div>
+
+            <p class="footer-meta">&copy; <span data-current-year></span> InvitaStudio. Base publica V1.</p>
+        </footer>
+    </div>
+</body>
+</html>

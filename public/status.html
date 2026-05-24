@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvitaStudio | Estado de pedido</title>
+    <meta name="description" content="Consulta el estado actual de tu pedido en InvitaStudio usando tu numero de pedido y el correo asociado.">
+    <link rel="stylesheet" href="assets/css/base.css?v=20260514-1">
+    <link rel="stylesheet" href="assets/css/layout.css?v=20260514-1">
+    <link rel="stylesheet" href="assets/css/components.css?v=20260514-1">
+    <link rel="stylesheet" href="assets/css/pages.css?v=20260514-4">
+    <link rel="stylesheet" href="assets/css/responsive.css?v=20260514-3">
+    <script src="assets/js/app.js?v=20260514-1" defer></script>
+    <script src="assets/js/status_lookup.js?v=20260514-2" defer></script>
+    <script src="assets/js/messages.js?v=20260514-1" defer></script>
+</head>
+<body data-page="status">
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+    <div class="page-shell">
+        <header class="site-header" data-site-header>
+            <div class="brand-block">
+                <a class="brand-mark" href="index.html" aria-label="InvitaStudio inicio">
+                    <span class="brand-mark__symbol brand-mark__symbol--image" aria-hidden="true">
+                        <img class="brand-mark__image" src="assets/img/invita_stuidio_isotipo.png" alt="">
+                    </span>
+                    <span class="brand-mark__text">
+                        <strong>InvitaStudio</strong>
+                        <small>Invitaciones digitales</small>
+                    </span>
+                </a>
+            </div>
+
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="site-nav" id="site-nav" aria-label="Principal">
+                <a href="index.html" data-nav="home">Inicio</a>
+                <a href="services.html" data-nav="services">Servicios</a>
+                <a href="request.html" data-nav="request">Solicitud</a>
+                <a href="status.html" data-nav="status">Estado</a>
+                <a href="contact.html" data-nav="contact">Contacto</a>
+                <a class="button button-primary button-nav" href="request.html">Solicitar invitacion</a>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <section class="page-banner page-banner-status">
+                <div class="request-intro-grid">
+                    <div class="request-intro-copy">
+                        <p class="eyebrow">Consulta segura</p>
+                        <h1>Revisa el avance real de tu pedido con una validacion simple y sin iniciar sesion.</h1>
+                        <p class="lead">
+                            Ingresa tu numero de pedido y el correo asociado para consultar estado, progreso y entrega final
+                            cuando ya este disponible.
+                        </p>
+                    </div>
+
+                    <article class="card-surface info-card">
+                        <span class="chip">Como funciona</span>
+                        <ol class="number-list">
+                            <li>Validamos numero de pedido y correo asociado.</li>
+                            <li>Mostramos solo informacion publica del seguimiento.</li>
+                            <li>La descarga final solo se habilita si el pedido ya fue entregado.</li>
+                        </ol>
+                    </article>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="split-layout split-layout--wide status-lookup-layout">
+                    <form
+                        class="card-surface form-panel status-lookup-form"
+                        action="../api/status/lookup.php"
+                        method="post"
+                        novalidate
+                        data-status-form
+                        data-api-endpoint="../api/status/lookup.php"
+                        data-download-endpoint="../api/status/download.php"
+                    >
+                        <div class="form-panel__header">
+                            <h2>Buscar pedido</h2>
+                            <p>Usa exactamente el folio recibido y el correo con el que registraste la solicitud.</p>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-field" data-field-container="numero_pedido">
+                                <label for="numero_pedido">Numero de pedido</label>
+                                <input
+                                    id="numero_pedido"
+                                    name="numero_pedido"
+                                    type="text"
+                                    placeholder="INV-2026-000001"
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                    required
+                                >
+                                <p class="field-error" data-error-for="numero_pedido" aria-live="polite"></p>
+                            </div>
+
+                            <div class="form-field" data-field-container="correo">
+                                <label for="correo">Correo asociado</label>
+                                <input
+                                    id="correo"
+                                    name="correo"
+                                    type="email"
+                                    placeholder="correo@ejemplo.com"
+                                    autocomplete="email"
+                                    required
+                                >
+                                <p class="field-error" data-error-for="correo" aria-live="polite"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button
+                                class="button button-primary"
+                                type="submit"
+                                data-submit-button
+                                data-default-label="Consultar estado"
+                                data-loading-label="Consultando..."
+                            >
+                                Consultar estado
+                            </button>
+                            <a class="button button-outline" href="request.html">Crear solicitud</a>
+                        </div>
+
+                        <p class="form-feedback" data-form-feedback aria-live="polite"></p>
+                    </form>
+
+                    <aside class="aside-stack">
+                        <article class="card-surface status-result-card is-idle" data-status-result aria-live="polite">
+                            <span class="chip">Seguimiento</span>
+                            <h3>Aun no hay resultados</h3>
+                            <p>Cuando completes la consulta, aqui veras el estado del pedido, la linea de avance y la entrega final si ya esta disponible.</p>
+                        </article>
+
+                        <article class="card-surface info-card">
+                            <span class="chip">Seguridad basica</span>
+                            <ul class="feature-list">
+                                <li>No mostramos datos internos ni identificadores administrativos.</li>
+                                <li>La consulta se valida con correo y numero de pedido.</li>
+                                <li>Si el pedido sigue pendiente, desde esta misma vista podras continuar al pago.</li>
+                            </ul>
+                        </article>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="content-section status-messages-section" data-public-messages-panel hidden>
+                <div class="split-layout split-layout--wide">
+                    <article class="card-surface status-messages-panel">
+                        <div class="form-panel__header">
+                            <h2>Mensajes y aclaraciones</h2>
+                            <p>Consulta el historial del pedido y responde directamente si el equipo necesita detalles adicionales.</p>
+                        </div>
+
+                        <div class="conversation-thread" data-public-message-thread>
+                            <div class="conversation-empty">
+                                <strong>Sin mensajes visibles todavia</strong>
+                                <p>Cuando la consulta se valide cargaremos aqui el historial asociado al pedido.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <aside class="aside-stack">
+                        <form
+                            class="card-surface form-panel status-message-form"
+                            data-public-message-form
+                            data-list-endpoint="../api/messages/list.php"
+                            data-create-endpoint="../api/messages/create.php"
+                            enctype="multipart/form-data"
+                            novalidate
+                        >
+                            <div class="form-panel__header">
+                                <h2>Responder al administrador</h2>
+                                <p>El historial se conserva por pedido. Puedes adjuntar referencias visuales o documentos de apoyo.</p>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="public-message-text">Mensaje</label>
+                                <textarea
+                                    id="public-message-text"
+                                    name="mensaje"
+                                    rows="6"
+                                    maxlength="2000"
+                                    placeholder="Escribe aqui tu aclaracion."
+                                    required
+                                ></textarea>
+                                <p class="field-note">Longitud permitida: 5 a 2000 caracteres.</p>
+                                <p class="field-error" data-public-message-error aria-live="polite"></p>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="public-message-file">Adjunto opcional</label>
+                                <input id="public-message-file" name="archivo_adjunto" type="file" accept=".jpg,.jpeg,.png,.pdf">
+                                <p class="field-note">Formatos permitidos: JPG, PNG, PDF. El upload se valida y se renombra de forma segura.</p>
+                            </div>
+
+                            <div class="form-actions">
+                                <button
+                                    class="button button-primary"
+                                    type="submit"
+                                    data-public-message-submit
+                                    data-default-label="Enviar mensaje"
+                                    data-loading-label="Enviando..."
+                                >
+                                    Enviar mensaje
+                                </button>
+                            </div>
+
+                            <p class="form-feedback" data-public-message-feedback aria-live="polite"></p>
+                        </form>
+
+                        <article class="card-surface info-card">
+                            <span class="chip">Adjuntos</span>
+                            <ul class="feature-list">
+                                <li>Solo aceptamos JPG, PNG y PDF.</li>
+                                <li>El servidor valida extension, MIME y renombra cada archivo.</li>
+                                <li>La conversacion queda asociada a tu folio de pedido.</li>
+                            </ul>
+                        </article>
+                    </aside>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div>
+                <a class="brand-mark brand-mark--footer" href="index.html">
+                    <span class="brand-mark__symbol brand-mark__symbol--image brand-mark__symbol--footer" aria-hidden="true">
+                        <img class="brand-mark__image brand-mark__image--footer" src="assets/img/invita_stuidio_isotipo.png" alt="">
+                    </span>
+                    <span class="brand-mark__text">
+                        <strong>InvitaStudio</strong>
+                        <small>Experiencias de invitacion digital</small>
+                    </span>
+                </a>
+                <p class="footer-copy">Sitio publico base para presentar servicios, recibir solicitudes y dar seguimiento a pedidos.</p>
+            </div>
+
+            <div class="footer-links">
+                <div>
+                    <h3>Navegacion</h3>
+                    <a href="services.html">Servicios</a>
+                    <a href="gallery.html">Galeria</a>
+                    <a href="status.html">Estado</a>
+                </div>
+                <div>
+                    <h3>Contacto</h3>
+                    <a href="contact.html">Canales de atencion</a>
+                    <a href="request.html">Nueva solicitud</a>
+                    <span>WhatsApp placeholder</span>
+                </div>
+                <div>
+                    <h3>Redes</h3>
+                    <span>Instagram placeholder</span>
+                    <span>Pinterest placeholder</span>
+                    <span>TikTok placeholder</span>
+                </div>
+            </div>
+
+            <p class="footer-meta">&copy; <span data-current-year></span> InvitaStudio. Base publica V1.</p>
+        </footer>
+    </div>
+</body>
+</html>

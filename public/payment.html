@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvitaStudio | Pago</title>
+    <meta name="description" content="Pantalla minima de pago para InvitaStudio.">
+    <style>
+        :root {
+            --bg: #fbf7ff;
+            --surface: #ffffff;
+            --surface-soft: #f6efff;
+            --border: rgba(143, 98, 186, 0.18);
+            --text: #2b2b2b;
+            --text-soft: #6a6070;
+            --primary: #8f62ba;
+            --primary-soft: #efe4fb;
+            --danger: #b2445d;
+            --success: #2f6c4a;
+            --shadow: 0 20px 50px rgba(101, 74, 126, 0.12);
+            --radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(216, 180, 248, 0.35), transparent 24%),
+                radial-gradient(circle at top right, rgba(230, 205, 162, 0.18), transparent 22%),
+                var(--bg);
+            color: var(--text);
+            font: 16px/1.5 "Poppins", "Segoe UI", sans-serif;
+        }
+
+        .payment-shell {
+            width: min(100% - 2rem, 880px);
+            margin: 2rem auto;
+        }
+
+        .payment-card {
+            display: grid;
+            gap: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+        }
+
+        .payment-head {
+            display: grid;
+            gap: 0.4rem;
+        }
+
+        .eyebrow {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3, p {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.05;
+        }
+
+        h2 {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            line-height: 1.1;
+        }
+
+        .payment-grid,
+        .summary-grid,
+        .card-picker,
+        .field-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .summary-grid,
+        .field-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .summary-item,
+        .state-item {
+            display: grid;
+            gap: 0.3rem;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #fff;
+        }
+
+        .summary-item--full {
+            grid-column: 1 / -1;
+        }
+
+        .summary-item span,
+        .state-item span,
+        .card-option small,
+        .field-help {
+            color: var(--text-soft);
+        }
+
+        .states {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .card-picker {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .card-option {
+            display: grid;
+            gap: 0.35rem;
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: linear-gradient(135deg, #fff, var(--surface-soft));
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .card-option.is-selected {
+            border-color: rgba(143, 98, 186, 0.5);
+            background: linear-gradient(135deg, var(--surface-soft), #fff);
+        }
+
+        .field {
+            display: grid;
+            gap: 0.4rem;
+            min-width: 0;
+        }
+
+        .field--full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.95rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #fff;
+        }
+
+        input[disabled] {
+            opacity: 0.7;
+        }
+
+        .field-error {
+            min-height: 1.1rem;
+            color: var(--danger);
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, #b186d7, #8f62ba);
+            color: #fff;
+        }
+
+        .button-secondary {
+            border-color: var(--border);
+            background: #fff;
+            color: var(--text);
+        }
+
+        .feedback {
+            min-height: 1.5rem;
+            padding: 0.9rem 1rem;
+            border-radius: 14px;
+            border: 1px solid transparent;
+            font-weight: 600;
+        }
+
+        .feedback.is-info {
+            border-color: var(--border);
+            background: var(--surface-soft);
+        }
+
+        .feedback.is-error {
+            border-color: rgba(178, 68, 93, 0.2);
+            background: rgba(255, 239, 242, 0.95);
+            color: var(--danger);
+        }
+
+        .feedback.is-success {
+            border-color: rgba(47, 108, 74, 0.2);
+            background: rgba(232, 248, 239, 0.96);
+            color: var(--success);
+        }
+
+        @media (max-width: 760px) {
+            .summary-grid,
+            .field-grid,
+            .states,
+            .card-picker {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .payment-shell {
+                width: min(100% - 1rem, 880px);
+                margin: 1rem auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="payment-shell">
+        <section class="payment-card">
+                <div class="payment-head">
+                    <p class="eyebrow">Pago</p>
+                    <h1>Captura los datos del pago</h1>
+                    <p>Revisa el resumen de tu solicitud y despues confirma el pago.</p>
+                </div>
+
+            <section class="payment-grid">
+                <div>
+                    <p class="eyebrow">Resumen de solicitud</p>
+                    <h2>Datos registrados</h2>
+                </div>
+
+                <div class="summary-grid">
+                    <article class="summary-item">
+                        <span>Numero de pedido</span>
+                        <strong id="order-number">Consultando...</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Total</span>
+                        <strong id="order-total">$0.00 MXN</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Tipo de evento</span>
+                        <strong id="order-type">Sin datos</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Nombre del evento</span>
+                        <strong id="order-name">Sin datos</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Fecha</span>
+                        <strong id="order-date">Sin datos</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Hora</span>
+                        <strong id="order-time">Sin datos</strong>
+                    </article>
+                    <article class="summary-item summary-item--full">
+                        <span>Ubicacion</span>
+                        <strong id="order-location">Sin datos</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Estilo</span>
+                        <strong id="order-style">Sin datos</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Colores</span>
+                        <strong id="order-colors">Sin datos</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Tematica</span>
+                        <strong id="order-theme">Sin datos</strong>
+                    </article>
+                    <article class="summary-item">
+                        <span>Formato</span>
+                        <strong id="order-format">Sin datos</strong>
+                    </article>
+                    <article class="summary-item summary-item--full">
+                        <span>Detalle</span>
+                        <strong id="order-message">Preparando resumen seguro del pedido.</strong>
+                    </article>
+                    <article class="summary-item summary-item--full">
+                        <span>Informacion adicional</span>
+                        <strong id="order-notes">Sin datos</strong>
+                    </article>
+                </div>
+
+                <div class="states">
+                    <article class="state-item">
+                        <span>Estado pedido</span>
+                        <strong id="order-status">Pendiente de carga</strong>
+                    </article>
+                    <article class="state-item">
+                        <span>Estado pago</span>
+                        <strong id="payment-status">Pendiente de carga</strong>
+                    </article>
+                </div>
+            </section>
+
+            <section class="payment-grid" aria-labelledby="payment-card-title">
+                <div>
+                    <p class="eyebrow">Metodo de pago</p>
+                    <h2 id="payment-card-title">Selecciona una tarjeta</h2>
+                </div>
+
+                <div class="card-picker" id="card-picker">
+                    <button class="card-option" type="button" data-number="4111111111111111" data-holder="Tarjeta Ficticia Uno" data-exp="12/30" data-cvv="123">
+                        <strong>4111 1111 1111 1111</strong>
+                        <small>Tarjeta Ficticia Uno | 12/30 | CVV 123</small>
+                    </button>
+                    <button class="card-option" type="button" data-number="4000000000000002" data-holder="Tarjeta Saldo Bajo" data-exp="12/30" data-cvv="222">
+                        <strong>4000 0000 0000 0002</strong>
+                        <small>Tarjeta alternativa</small>
+                    </button>
+                    <button class="card-option" type="button" data-number="4000000000000003" data-holder="Tarjeta Inactiva" data-exp="12/30" data-cvv="333">
+                        <strong>4000 0000 0000 0003</strong>
+                        <small>Tarjeta alternativa</small>
+                    </button>
+                </div>
+            </section>
+
+            <form id="payment-form" novalidate>
+                <div class="field-grid">
+                    <div class="field field--full">
+                        <label for="numero_tarjeta">Numero de tarjeta</label>
+                        <input id="numero_tarjeta" name="numero_tarjeta" type="text" inputmode="numeric" placeholder="4111111111111111">
+                        <p class="field-error" data-error-for="numero_tarjeta"></p>
+                    </div>
+
+                    <div class="field field--full">
+                        <label for="titular">Titular</label>
+                        <input id="titular" name="titular" type="text" placeholder="Tarjeta Ficticia Uno">
+                        <p class="field-error" data-error-for="titular"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="fecha_expiracion">Expiracion</label>
+                        <input id="fecha_expiracion" name="fecha_expiracion" type="text" inputmode="numeric" placeholder="MM/YY" maxlength="5">
+                        <p class="field-error" data-error-for="fecha_expiracion"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="cvv">CVV</label>
+                        <input id="cvv" name="cvv" type="password" inputmode="numeric" placeholder="123" maxlength="4">
+                        <p class="field-error" data-error-for="cvv"></p>
+                    </div>
+                </div>
+
+                <div class="actions" style="margin-top: 1rem;">
+                    <button class="button button-primary" id="submit-button" type="submit">Pagar ahora</button>
+                    <a class="button button-secondary" href="request.html">Crear otro pedido</a>
+                </div>
+            </form>
+
+            <p id="payment-feedback" class="feedback is-info">Validando el pedido con numero y correo...</p>
+
+            <section class="payment-grid">
+                <div>
+                    <p class="eyebrow">Resultado</p>
+                    <h2>Estado de la transaccion</h2>
+                </div>
+                <article class="summary-item summary-item--full">
+                    <strong id="result-title">Esperando procesamiento</strong>
+                    <span id="result-message">Cuando envies la tarjeta de prueba, aqui veras el resultado.</span>
+                </article>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const backendBaseUrl = "https://cintiaparral.com/invita";
+        const lookupEndpoint = buildApiUrl("status/lookup.php");
+        const processEndpoint = buildApiUrl("payments/process.php");
+        const form = document.getElementById("payment-form");
+        const submitButton = document.getElementById("submit-button");
+        const feedbackElement = document.getElementById("payment-feedback");
+        const cardButtons = Array.from(document.querySelectorAll(".card-option"));
+
+        const fields = {
+            numero_tarjeta: document.getElementById("numero_tarjeta"),
+            titular: document.getElementById("titular"),
+            fecha_expiracion: document.getElementById("fecha_expiracion"),
+            cvv: document.getElementById("cvv"),
+        };
+
+        const query = new URLSearchParams(window.location.search);
+        const orderLookup = {
+            numero_pedido: String(query.get("numero_pedido") || "").trim().toUpperCase(),
+            correo: String(query.get("correo") || "").trim().toLowerCase(),
+        };
+
+        let isSubmitting = false;
+
+        init();
+
+        function buildApiUrl(path) {
+            const normalizedPath = String(path || "").trim().replace(/^\/+/, "");
+
+            return backendBaseUrl + "/api/" + normalizedPath;
+        }
+
+        async function init() {
+            bindCardPicker();
+            bindFieldSanitizers();
+
+            if (!orderLookup.numero_pedido || !orderLookup.correo) {
+                setFeedback("Faltan numero de pedido y correo en el enlace de pago.", "error");
+                return;
+            }
+
+            try {
+                const summary = await requestJson(lookupEndpoint, orderLookup);
+                const data = summary.data || {};
+                fillSummary(data);
+
+                if (data.can_process_payment === true) {
+                    setFeedback("Pedido validado. Puedes capturar o seleccionar una tarjeta para continuar.", "info");
+                    disableCapture(false);
+                    setSubmitAvailability(true);
+                } else {
+                    setFeedback("Este pedido ya no admite un nuevo pago. Puedes volver al inicio.", "info");
+                    disableCapture(true);
+                    setSubmitAvailability(false);
+                    replaceActionsWithHomeButton();
+                }
+            } catch (error) {
+                setFeedback(error.message || "No fue posible validar el pedido.", "error");
+            }
+        }
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            if (isSubmitting) {
+                return;
+            }
+
+            clearErrors();
+            const payload = buildPayload();
+            const validationErrors = validatePayload(payload);
+
+            if (validationErrors.length > 0) {
+                renderErrors(validationErrors);
+                setFeedback("Revisa los campos marcados antes de pagar.", "error");
+                return;
+            }
+
+            isSubmitting = true;
+            submitButton.disabled = true;
+            submitButton.textContent = "Procesando pago...";
+            setFeedback("Procesando pago...", "info");
+
+            try {
+                const response = await requestJson(processEndpoint, payload);
+                const data = response.data || {};
+                fillSummary(data);
+                setResult("Pago aprobado", buildResultMessage(data, true));
+                setFeedback(response.message || "Pago procesado correctamente.", "success");
+                submitButton.textContent = "Pago confirmado";
+                submitButton.disabled = true;
+                disableCapture(true);
+                replaceActionsWithHomeButton();
+            } catch (error) {
+                const data = error.data || {};
+
+                if (data && data.simulacion_local === true) {
+                    fillSummary(data);
+                    setResult("Pago rechazado", buildResultMessage(data, false));
+                    setFeedback(error.message || "El pago fue rechazado.", "error");
+                    submitButton.textContent = "Pagar ahora";
+                    submitButton.disabled = false;
+                    disableCapture(false);
+                } else {
+                    setFeedback(error.message || "No fue posible procesar el pago.", "error");
+                    submitButton.textContent = "Pagar ahora";
+                    submitButton.disabled = false;
+                }
+            } finally {
+                isSubmitting = false;
+            }
+        });
+
+        function bindCardPicker() {
+            cardButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    cardButtons.forEach((item) => item.classList.remove("is-selected"));
+                    button.classList.add("is-selected");
+                    fields.numero_tarjeta.value = button.dataset.number || "";
+                    fields.titular.value = button.dataset.holder || "";
+                    fields.fecha_expiracion.value = button.dataset.exp || "";
+                    fields.cvv.value = button.dataset.cvv || "";
+                });
+            });
+        }
+
+        function replaceActionsWithHomeButton() {
+            const actions = document.querySelector(".actions");
+
+            if (!(actions instanceof HTMLElement)) {
+                return;
+            }
+
+            actions.innerHTML = '<a class="button button-primary" href="index.html">Volver al inicio</a>';
+        }
+
+        function setSubmitAvailability(isAvailable) {
+            submitButton.disabled = !isAvailable;
+            submitButton.textContent = isAvailable ? "Pagar ahora" : "Pago no disponible";
+        }
+
+        function bindFieldSanitizers() {
+            fields.numero_tarjeta.addEventListener("input", () => {
+                fields.numero_tarjeta.value = fields.numero_tarjeta.value.replace(/\D+/g, "").slice(0, 19);
+            });
+
+            fields.cvv.addEventListener("input", () => {
+                fields.cvv.value = fields.cvv.value.replace(/\D+/g, "").slice(0, 4);
+            });
+
+            fields.fecha_expiracion.addEventListener("input", () => {
+                const digits = fields.fecha_expiracion.value.replace(/\D+/g, "").slice(0, 4);
+                fields.fecha_expiracion.value = digits.length > 2
+                    ? digits.slice(0, 2) + "/" + digits.slice(2)
+                    : digits;
+            });
+        }
+
+        function disableCapture(isDisabled) {
+            Object.values(fields).forEach((field) => {
+                field.disabled = isDisabled;
+            });
+            cardButtons.forEach((button) => {
+                button.disabled = isDisabled;
+            });
+        }
+
+        function buildPayload() {
+            return {
+                numero_pedido: orderLookup.numero_pedido,
+                correo: orderLookup.correo,
+                numero_tarjeta: fields.numero_tarjeta.value.trim(),
+                titular: fields.titular.value.trim(),
+                fecha_expiracion: fields.fecha_expiracion.value.trim(),
+                cvv: fields.cvv.value.trim(),
+            };
+        }
+
+        function validatePayload(payload) {
+            const errors = [];
+
+            if (!/^\d{13,19}$/.test(payload.numero_tarjeta)) {
+                errors.push(["numero_tarjeta", "Ingresa una tarjeta de prueba valida."]);
+            }
+            if (payload.titular.length < 3) {
+                errors.push(["titular", "Ingresa el titular de la tarjeta."]);
+            }
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(payload.fecha_expiracion)) {
+                errors.push(["fecha_expiracion", "Usa el formato MM/YY."]);
+            }
+            if (!/^\d{3,4}$/.test(payload.cvv)) {
+                errors.push(["cvv", "Ingresa un CVV valido."]);
+            }
+
+            return errors;
+        }
+
+        function renderErrors(errors) {
+            errors.forEach(([fieldName, message]) => {
+                const errorElement = document.querySelector('[data-error-for="' + fieldName + '"]');
+                if (errorElement) {
+                    errorElement.textContent = message;
+                }
+            });
+        }
+
+        function clearErrors() {
+            document.querySelectorAll(".field-error").forEach((element) => {
+                element.textContent = "";
+            });
+        }
+
+        function fillSummary(data) {
+            setText("order-number", data.numero_pedido || orderLookup.numero_pedido || "Sin numero");
+            setText("order-total", formatCurrency(data.monto_pago || 0));
+            setText("order-type", data.tipo_evento || "Sin datos");
+            setText("order-name", data.nombre_evento || "Sin datos");
+            setText("order-message", data.mensaje_estado || data.mensaje_transaccion || "Sin detalles");
+            setText("order-date", formatDate(data.fecha_evento));
+            setText("order-time", formatTime(data.hora_evento));
+            setText("order-location", data.ubicacion_evento || "Sin datos");
+            setText("order-style", data.estilo_diseno || "Sin datos");
+            setText("order-colors", data.colores || "Sin datos");
+            setText("order-theme", data.tematica || "Sin datos");
+            setText("order-format", getFormatLabel(data.formato_entrega));
+            setText("order-notes", data.informacion_adicional || "Sin datos");
+            setText("order-status", getOrderStatusLabel(data.estado_pedido));
+            setText("payment-status", getPaymentStatusLabel(data.estado_pago));
+        }
+
+        function setResult(title, message) {
+            setText("result-title", title);
+            setText("result-message", message);
+        }
+
+        function setFeedback(message, state) {
+            feedbackElement.textContent = message;
+            feedbackElement.className = "feedback";
+            if (state) {
+                feedbackElement.classList.add("is-" + state);
+            }
+        }
+
+        function setText(id, value) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value || "";
+            }
+        }
+
+        function buildResultMessage(data, approved) {
+            if (approved) {
+                return "Pedido " + (data.numero_pedido || "") + " aprobado. Referencia: " + (data.referencia_pago || "sin referencia") + ".";
+            }
+
+            return data.mensaje_transaccion || "La transaccion fue rechazada.";
+        }
+
+        async function requestJson(url, payload) {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            let json;
+
+            try {
+                json = await response.json();
+            } catch (error) {
+                throw new Error("La API devolvio una respuesta invalida.");
+            }
+
+            if (!response.ok || json.success !== true) {
+                const error = new Error(json.message || "La solicitud fallo.");
+                error.data = json.data || null;
+                throw error;
+            }
+
+            return json;
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat("es-MX", {
+                style: "currency",
+                currency: "MXN",
+                minimumFractionDigits: 2,
+            }).format(Number(amount || 0));
+        }
+
+        function formatDate(value) {
+            if (!value) {
+                return "Sin fecha";
+            }
+            const date = new Date(String(value).slice(0, 10) + "T00:00:00");
+            return Number.isNaN(date.getTime())
+                ? "Sin fecha"
+                : new Intl.DateTimeFormat("es-MX", { day: "2-digit", month: "short", year: "numeric" }).format(date);
+        }
+
+        function formatTime(value) {
+            if (!value) {
+                return "Sin hora";
+            }
+            return String(value).slice(0, 5);
+        }
+
+        function getOrderStatusLabel(status) {
+            const labels = {
+                pendiente: "Pendiente",
+                pago_confirmado: "Pago confirmado",
+                en_proceso: "En proceso",
+                terminado: "Terminado",
+                entregado: "Entregado",
+                cancelado: "Cancelado",
+            };
+            return labels[status] || "Sin estado";
+        }
+
+        function getPaymentStatusLabel(status) {
+            const labels = {
+                pendiente: "Pendiente",
+                confirmado: "Confirmado",
+                rechazado: "Rechazado",
+                reembolsado: "Reembolsado",
+            };
+            return labels[status] || "Sin estado";
+        }
+
+        function getFormatLabel(format) {
+            const labels = {
+                imagen: "Imagen",
+                pdf: "PDF",
+                video: "Video",
+            };
+            return labels[format] || "Sin definir";
+        }
+    </script>
+</body>
+</html>

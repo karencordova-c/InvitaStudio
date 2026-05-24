@@ -1,0 +1,154 @@
+@media (min-width: 768px) {
+    .hero-actions {
+        gap: 1rem 1.1rem;
+    }
+
+    .page-shell {
+        width: min(calc(100% - 2rem), var(--max-width));
+        padding-top: 1.25rem;
+    }
+
+    .hero-section,
+    .split-layout,
+    .split-layout--wide {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .split-layout.status-lookup-layout,
+    .split-layout.payment-layout,
+    .split-layout--wide.status-lookup-layout,
+    .split-layout--wide.payment-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero-metrics,
+    .mini-showcase-grid,
+    .services-hero__stats,
+    .services-catalog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.15rem;
+    }
+
+    .services-gallery-page {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card-grid-three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .delivery-options,
+    .service-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .payment-summary-grid,
+    .payment-state-stack,
+    .payment-card-picker {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-links {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .chip-row {
+        grid-auto-flow: column;
+        justify-content: start;
+        align-items: center;
+    }
+
+    .admin-auth-layout,
+    .admin-toolbar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .site-header {
+        padding: 1rem 1.15rem;
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+
+    .site-nav {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.4rem;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .button-nav {
+        margin-top: 0;
+        margin-left: 0.5rem;
+    }
+
+    .hero-section,
+    .page-banner,
+    .content-section {
+        padding: 2rem;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .services-catalog-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .request-intro-grid {
+        grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+        align-items: center;
+    }
+
+    .payment-intro-grid {
+        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+    }
+
+    .payment-card-picker {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .status-result-header,
+    .status-delivery-card {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .split-layout.status-lookup-layout,
+    .split-layout.payment-layout,
+    .split-layout--wide.status-lookup-layout,
+    .split-layout--wide.payment-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .split-layout--wide {
+        grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.8fr);
+    }
+
+    .site-footer {
+        grid-template-columns: 1.2fr 1fr;
+        align-items: start;
+    }
+
+    .footer-meta {
+        grid-column: 1 / -1;
+    }
+}
