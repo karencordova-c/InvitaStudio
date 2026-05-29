@@ -29,7 +29,7 @@ $appName = htmlspecialchars($appConfig['app_name'], ENT_QUOTES, 'UTF-8');
     <meta name="description" content="Dashboard administrativo principal de InvitaStudio para seguimiento de pedidos, pagos y entregas.">
     <link rel="stylesheet" href="../public/assets/css/base.css">
     <link rel="stylesheet" href="../public/assets/css/components.css">
-    <link rel="stylesheet" href="../public/assets/css/admin.css?v=20260514-1">
+    <link rel="stylesheet" href="../public/assets/css/admin.css?v=20260528-1">
     <script src="../public/assets/js/admin.js" defer></script>
 </head>
 <body class="admin-body" data-page="admin-dashboard">

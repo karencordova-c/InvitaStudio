@@ -32,7 +32,7 @@ $appName = htmlspecialchars((string) ($appConfig['app_name'] ?? 'InvitaStudio'),
     <meta name="description" content="Detalle administrativo de conversacion por pedido en InvitaStudio.">
     <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="../../public/assets/css/components.css">
-    <link rel="stylesheet" href="../../public/assets/css/admin.css?v=20260514-1">
+    <link rel="stylesheet" href="../../public/assets/css/admin.css?v=20260528-1">
     <script src="../../public/assets/js/admin.js" defer></script>
     <script src="../../public/assets/js/messages.js" defer></script>
 </head>
