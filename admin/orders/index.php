@@ -57,7 +57,7 @@ $appName = htmlspecialchars((string) ($appConfig['app_name'] ?? 'InvitaStudio'),
     <meta name="description" content="Panel administrativo para consultar, filtrar y gestionar pedidos de InvitaStudio.">
     <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="../../public/assets/css/components.css">
-    <link rel="stylesheet" href="../../public/assets/css/admin.css?v=20260528-1">
+    <link rel="stylesheet" href="../../public/assets/css/admin.css?v=20260528-2">
     <script src="../../public/assets/js/admin.js" defer></script>
     <script src="../../public/assets/js/admin_orders.js" defer></script>
 </head>

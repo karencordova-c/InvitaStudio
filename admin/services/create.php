@@ -29,7 +29,7 @@ $appName = htmlspecialchars((string) ($appConfig['app_name'] ?? 'InvitaStudio'),
     <meta name="description" content="Formulario administrativo para crear servicios del catalogo de InvitaStudio.">
     <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="../../public/assets/css/components.css">
-    <link rel="stylesheet" href="../../public/assets/css/admin.css?v=20260528-1">
+    <link rel="stylesheet" href="../../public/assets/css/admin.css?v=20260528-2">
     <script src="../../public/assets/js/admin.js" defer></script>
     <script src="../../public/assets/js/admin_services.js" defer></script>
 </head>
