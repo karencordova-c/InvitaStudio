@@ -207,7 +207,7 @@ function initRequestForm() {
         } catch (error) {
             showFormFeedback(
                 feedbackElement,
-                "Ocurrio un problema al conectar con la API. Intenta nuevamente.",
+                "Ocurrio un problema al enviar la solicitud. Intenta nuevamente.",
                 "error"
             );
             clearResultActions(resultActionsElement);
@@ -456,12 +456,12 @@ function updateServiceSummary(form, titleElement, metaElement) {
 
     if (!selectedService) {
         titleElement.textContent = "Selecciona una opcion para ver el resumen.";
-        metaElement.textContent = "Categoria y precio placeholder apareceran aqui.";
+        metaElement.textContent = "Categoria y precio apareceran aqui.";
         return;
     }
 
     titleElement.textContent = selectedService.title;
-    metaElement.textContent = `Categoria: ${selectedService.category} | Precio placeholder: ${selectedService.priceLabel}`;
+    metaElement.textContent = `Categoria: ${selectedService.category} | Precio: ${selectedService.priceLabel}`;
 }
 
 function setFieldError(form, fieldName, message) {
@@ -581,7 +581,7 @@ function renderResultActions(container, data) {
     }
 
     const summary = amount > 0
-        ? `<p>Pago simulado base: ${formatRequestCurrency(amount)}.</p>`
+        ? `<p>Total estimado: ${formatRequestCurrency(amount)}.</p>`
         : "";
 
     container.innerHTML = `
@@ -606,7 +606,7 @@ async function parseJsonResponse(response) {
     } catch (error) {
         return {
             success: false,
-            message: "La API devolvio una respuesta invalida.",
+            message: "No fue posible leer la respuesta. Intenta nuevamente.",
             errors: {},
         };
     }

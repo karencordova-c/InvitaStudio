@@ -166,7 +166,7 @@ function initPlaceholderForms() {
                 return;
             }
 
-            feedbackElement.textContent = form.dataset.placeholderForm || "Accion visual ejecutada.";
+            feedbackElement.textContent = form.dataset.placeholderForm || "Mensaje enviado.";
         });
     });
 }

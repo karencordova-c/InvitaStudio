@@ -653,7 +653,7 @@ function buildConversationDetailsUrl(detailsPage, orderId) {
 }
 
 function getActorLabel(actorType) {
-    return String(actorType || "").toLowerCase() === "admin" ? "Administrador" : "Cliente";
+    return String(actorType || "").toLowerCase() === "admin" ? "Equipo" : "Cliente";
 }
 
 function getOrderStatusLabel(status) {
@@ -712,7 +712,7 @@ async function fetchJson(endpoint) {
 
 async function fetchJsonWithOptions(endpoint, options) {
     if (!endpoint) {
-        throw new Error("No existe endpoint configurado.");
+        throw new Error("No fue posible cargar los mensajes. Intenta nuevamente.");
     }
 
     const response = await fetch(endpoint, options);
@@ -731,7 +731,7 @@ async function parseMessagesJsonResponse(response) {
     } catch (error) {
         return {
             success: false,
-            message: "La API devolvio una respuesta invalida.",
+            message: "No fue posible leer la respuesta. Intenta nuevamente.",
         };
     }
 }

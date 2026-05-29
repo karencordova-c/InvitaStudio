@@ -16,7 +16,7 @@ const paymentFieldRules = {
         required: true,
         minLength: 3,
         maxLength: 150,
-        message: "Ingresa el titular de la tarjeta de prueba.",
+        message: "Ingresa el titular de la tarjeta.",
     },
     fecha_expiracion: {
         required: true,
@@ -52,16 +52,16 @@ function renderCanonicalPaymentView() {
                     data-lookup-endpoint="${resolvePaymentApiUrl("status/lookup.php")}"
                 >
                     <div class="form-panel__header">
-                        <p class="eyebrow">Pago simulado</p>
+                        <p class="eyebrow">Pago</p>
                         <h2>Captura los datos de pago</h2>
-                        <p>Selecciona una tarjeta de prueba o escribe los datos manualmente y despues presiona el boton de pagar.</p>
+                        <p>Selecciona una tarjeta o escribe los datos manualmente y despues presiona el boton de pagar.</p>
                     </div>
 
                     <section class="request-form__section" data-payment-capture aria-labelledby="section-payment-card">
                         <div class="request-form__meta">
                             <p class="eyebrow">Datos de tarjeta</p>
                             <h3 id="section-payment-card">Tarjeta de prueba</h3>
-                            <p>Selecciona una tarjeta de prueba o captura los datos manualmente.</p>
+                            <p>Selecciona una tarjeta o captura los datos manualmente.</p>
                         </div>
 
                         <div class="payment-card-picker" aria-label="Tarjetas de prueba disponibles">
@@ -70,13 +70,13 @@ function renderCanonicalPaymentView() {
                                 type="button"
                                 data-payment-card-option
                                 data-card-number="4111111111111111"
-                                data-card-holder="Tarjeta Ficticia Uno"
+                                data-card-holder="Invitado Principal"
                                 data-card-expiration="12/30"
                                 data-card-cvv="123"
                             >
                                 <span class="payment-card-picker__brand">Visa prueba</span>
                                 <strong>4111 1111 1111 1111</strong>
-                                <small>Tarjeta Ficticia Uno | 12/30 | CVV 123</small>
+                                <small>Tarjeta principal | 12/30 | CVV 123</small>
                             </button>
 
                             <button
@@ -117,7 +117,7 @@ function renderCanonicalPaymentView() {
 
                             <div class="form-field form-field--full" data-field-container="titular">
                                 <label for="titular">Titular</label>
-                                <input id="titular" name="titular" type="text" autocomplete="cc-name" placeholder="Tarjeta Ficticia Uno" required>
+                                <input id="titular" name="titular" type="text" autocomplete="cc-name" placeholder="Nombre del titular" required>
                                 <p class="field-error" data-error-for="titular" aria-live="polite"></p>
                             </div>
 
@@ -187,7 +187,7 @@ function renderCanonicalPaymentView() {
                     <article class="card-surface payment-result-card is-info" data-payment-result>
                         <span class="chip">Resultado</span>
                         <h3>Esperando procesamiento</h3>
-                        <p>Cuando el pedido este cargado y envies la tarjeta de prueba, aqui veras el resultado de la transaccion.</p>
+                        <p>Cuando el pedido este cargado y envies los datos de pago, aqui veras el resultado de la transaccion.</p>
                     </article>
                 </form>
             </div>
@@ -221,7 +221,7 @@ async function initPaymentForm() {
 
         showPaymentFeedback(
             feedbackElement,
-            "Pedido validado. Ya puedes capturar o seleccionar una tarjeta de prueba.",
+            "Pedido validado. Ya puedes capturar o seleccionar una tarjeta.",
             "info"
         );
         setSubmitState(submitButton, false);
@@ -229,7 +229,7 @@ async function initPaymentForm() {
 
         if (summaryNoteElement instanceof HTMLElement) {
             summaryNoteElement.textContent = summaryData.can_process_payment
-                ? "El pedido fue validado y aun admite un pago simulado."
+                ? "El pedido fue validado y aun admite un pago."
                 : "El formulario permanece habilitado para pruebas aunque este pedido no cumpla el criterio normal de pago.";
         }
     } catch (error) {
@@ -264,7 +264,7 @@ async function initPaymentForm() {
         const payload = buildPaymentPayload(form);
         isSubmitting = true;
         setSubmitState(submitButton, true);
-        showPaymentFeedback(feedbackElement, "Procesando pago simulado...", "loading");
+        showPaymentFeedback(feedbackElement, "Procesando pago...", "loading");
 
         try {
             const response = await fetch(form.dataset.apiEndpoint || form.action, {
@@ -312,14 +312,14 @@ async function initPaymentForm() {
             applyServerErrors(form, responseData.errors || {});
             showPaymentFeedback(
                 feedbackElement,
-                responseData.message || "No fue posible procesar el pago simulado.",
+                responseData.message || "No fue posible procesar el pago.",
                 "error"
             );
             focusFirstInvalidField(form);
         } catch (error) {
             showPaymentFeedback(
                 feedbackElement,
-                "Ocurrio un problema al conectar con la API. Intenta nuevamente.",
+                "Ocurrio un problema al procesar el pago. Intenta nuevamente.",
                 "error"
             );
         } finally {
@@ -357,7 +357,7 @@ function ensurePaymentCaptureUi(form) {
             <div class="request-form__meta">
                 <p class="eyebrow">Datos de tarjeta</p>
                 <h3 id="section-payment-card">Tarjeta de prueba</h3>
-                <p>Selecciona una tarjeta de prueba o captura los datos manualmente.</p>
+                <p>Selecciona una tarjeta o captura los datos manualmente.</p>
             </div>
 
             <div class="payment-card-picker" aria-label="Tarjetas de prueba disponibles">
@@ -366,13 +366,13 @@ function ensurePaymentCaptureUi(form) {
                     type="button"
                     data-payment-card-option
                     data-card-number="4111111111111111"
-                    data-card-holder="Tarjeta Ficticia Uno"
+                    data-card-holder="Invitado Principal"
                     data-card-expiration="12/30"
                     data-card-cvv="123"
                 >
                     <span class="payment-card-picker__brand">Visa prueba</span>
                     <strong>4111 1111 1111 1111</strong>
-                    <small>Tarjeta Ficticia Uno | 12/30 | CVV 123</small>
+                    <small>Tarjeta principal | 12/30 | CVV 123</small>
                 </button>
 
                 <button
@@ -413,7 +413,7 @@ function ensurePaymentCaptureUi(form) {
 
                 <div class="form-field form-field--full" data-field-container="titular">
                     <label for="titular">Titular</label>
-                    <input id="titular" name="titular" type="text" autocomplete="cc-name" placeholder="Tarjeta Ficticia Uno" required>
+                    <input id="titular" name="titular" type="text" autocomplete="cc-name" placeholder="Nombre del titular" required>
                     <p class="field-error" data-error-for="titular" aria-live="polite"></p>
                 </div>
 
@@ -432,7 +432,7 @@ function ensurePaymentCaptureUi(form) {
         </section>
 
         <div class="form-actions" data-payment-actions>
-            <button class="button button-primary" type="submit" data-submit-button data-default-label="Procesar pago simulado" data-loading-label="Procesando pago...">
+            <button class="button button-primary" type="submit" data-submit-button data-default-label="Procesar pago" data-loading-label="Procesando pago...">
                 Pagar ahora
             </button>
             <a class="button button-outline" href="request.html">Crear otro pedido</a>
@@ -667,7 +667,7 @@ function validatePaymentField(form, fieldName) {
 function validateCardNumberField(value) {
     return /^\d{13,19}$/.test(value)
         ? ""
-        : "Ingresa una tarjeta de prueba usando solo numeros.";
+        : "Ingresa una tarjeta usando solo numeros.";
 }
 
 function validateExpirationField(value) {
@@ -877,7 +877,7 @@ function renderResultCard(container, state, title, message) {
 function buildSummaryMessage(summaryData) {
     const amountText = formatPaymentCurrency(summaryData.monto_pago || 0);
 
-    return `Pedido ${summaryData.numero_pedido || ""} validado. Monto base simulado: ${amountText}.`;
+    return `Pedido ${summaryData.numero_pedido || ""} validado. Total a pagar: ${amountText}.`;
 }
 
 function buildBlockedPaymentMessage(summaryData) {
@@ -886,10 +886,10 @@ function buildBlockedPaymentMessage(summaryData) {
     }
 
     if (Number(summaryData.monto_pago || 0) <= 0) {
-        return "El pedido no tiene un monto simulado disponible para procesar.";
+        return "El pedido no tiene un monto disponible para procesar.";
     }
 
-    return "El pedido no esta disponible para un nuevo pago simulado en su estado actual.";
+    return "El pedido no esta disponible para un nuevo pago en su estado actual.";
 }
 
 function buildTransactionMessage(data, isApproved) {
@@ -977,7 +977,7 @@ async function parsePaymentJsonResponse(response) {
     } catch (error) {
         return {
             success: false,
-            message: "La API devolvio una respuesta invalida.",
+            message: "No fue posible leer la respuesta. Intenta nuevamente.",
             errors: {},
         };
     }

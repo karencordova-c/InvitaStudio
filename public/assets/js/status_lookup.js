@@ -96,7 +96,7 @@ function initStatusLookupForm() {
         } catch (error) {
             showStatusFeedback(
                 feedbackElement,
-                "Ocurrio un problema al conectar con la API. Intenta nuevamente.",
+                "Ocurrio un problema al consultar el pedido. Intenta nuevamente.",
                 "error"
             );
             renderStatusEmptyState(resultElement, "No fue posible obtener el estado del pedido.");
@@ -359,7 +359,7 @@ function buildPaymentActionMarkup(data) {
         <section class="status-delivery-card">
             <div>
                 <h4>Pago pendiente</h4>
-                <p>Tu pedido aun admite pago simulado. Puedes continuar desde aqui sin volver a buscar el folio.</p>
+                <p>Tu pedido aun admite pago. Puedes continuar desde aqui sin volver a buscar el folio.</p>
             </div>
             <a class="button button-primary" href="${escapeAttribute(paymentUrl)}">Pagar ahora</a>
         </section>
@@ -729,7 +729,7 @@ async function parseStatusJsonResponse(response) {
     } catch (error) {
         return {
             success: false,
-            message: "La API devolvio una respuesta invalida.",
+            message: "No fue posible leer la respuesta. Intenta nuevamente.",
             errors: {},
         };
     }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InvitaStudio | Pago</title>
-    <meta name="description" content="Pantalla minima de pago para InvitaStudio.">
+    <meta name="description" content="Confirma el pago de tu invitacion digital en InvitaStudio.">
     <style>
         :root {
             --bg: #fbf7ff;
@@ -332,15 +332,15 @@
                 </div>
 
                 <div class="card-picker" id="card-picker">
-                    <button class="card-option" type="button" data-number="4111111111111111" data-holder="Tarjeta Ficticia Uno" data-exp="12/30" data-cvv="123">
+                    <button class="card-option" type="button" data-number="4111111111111111" data-holder="Invitado Principal" data-exp="12/30" data-cvv="123">
                         <strong>4111 1111 1111 1111</strong>
-                        <small>Tarjeta Ficticia Uno | 12/30 | CVV 123</small>
+                        <small>Tarjeta principal | 12/30 | CVV 123</small>
                     </button>
-                    <button class="card-option" type="button" data-number="4000000000000002" data-holder="Tarjeta Saldo Bajo" data-exp="12/30" data-cvv="222">
+                    <button class="card-option" type="button" data-number="4000000000000002" data-holder="Invitado Principal" data-exp="12/30" data-cvv="222">
                         <strong>4000 0000 0000 0002</strong>
                         <small>Tarjeta alternativa</small>
                     </button>
-                    <button class="card-option" type="button" data-number="4000000000000003" data-holder="Tarjeta Inactiva" data-exp="12/30" data-cvv="333">
+                    <button class="card-option" type="button" data-number="4000000000000003" data-holder="Invitado Principal" data-exp="12/30" data-cvv="333">
                         <strong>4000 0000 0000 0003</strong>
                         <small>Tarjeta alternativa</small>
                     </button>
@@ -357,7 +357,7 @@
 
                     <div class="field field--full">
                         <label for="titular">Titular</label>
-                        <input id="titular" name="titular" type="text" placeholder="Tarjeta Ficticia Uno">
+                        <input id="titular" name="titular" type="text" placeholder="Nombre del titular">
                         <p class="field-error" data-error-for="titular"></p>
                     </div>
 
@@ -389,7 +389,7 @@
                 </div>
                 <article class="summary-item summary-item--full">
                     <strong id="result-title">Esperando procesamiento</strong>
-                    <span id="result-message">Cuando envies la tarjeta de prueba, aqui veras el resultado.</span>
+                    <span id="result-message">Cuando envies los datos de pago, aqui veras el resultado.</span>
                 </article>
             </section>
         </section>
@@ -577,7 +577,7 @@
             const errors = [];
 
             if (!/^\d{13,19}$/.test(payload.numero_tarjeta)) {
-                errors.push(["numero_tarjeta", "Ingresa una tarjeta de prueba valida."]);
+                errors.push(["numero_tarjeta", "Ingresa una tarjeta valida."]);
             }
             if (payload.titular.length < 3) {
                 errors.push(["titular", "Ingresa el titular de la tarjeta."]);
@@ -668,7 +668,7 @@
             try {
                 json = await response.json();
             } catch (error) {
-                throw new Error("La API devolvio una respuesta invalida.");
+                throw new Error("No fue posible leer la respuesta. Intenta nuevamente.");
             }
 
             if (!response.ok || json.success !== true) {

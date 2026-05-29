@@ -51,7 +51,7 @@ async function fetchPublicServicesJson(endpoint) {
     try {
         responseData = await response.json();
     } catch (error) {
-        throw new Error("La API devolvio una respuesta invalida.");
+        throw new Error("No fue posible cargar los servicios. Intenta nuevamente.");
     }
 
     if (!response.ok || responseData.success !== true) {
@@ -71,7 +71,7 @@ function renderPublicServicesGrid(container, services) {
             <article class="service-card service-card--empty">
                 <span class="pricing-label">Sin catalogo</span>
                 <h2>Por ahora no hay servicios activos.</h2>
-                <p>El administrador puede activar servicios desde el panel para publicarlos en esta seccion.</p>
+                <p>Pronto agregaremos nuevas opciones para que elijas la invitacion ideal.</p>
                 <a class="button button-secondary" href="contact.html">Contactar a InvitaStudio</a>
             </article>
         `;
